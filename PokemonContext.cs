@@ -19,6 +19,12 @@ namespace ProjectePokemon
                 .HasOptional(p => p.EvolucionsPrevias)
                 .WithMany(p => p.EvolucionsSeguents);
 
+            modelBuilder.Entity<Entrenador>().HasMany(e => e.CombatsParticipats)
+                .WithMany(c => c.Participants);
+
+            modelBuilder.Entity<Entrenador>().HasOptional(e => e.CombatGuanyat)
+                .WithOptionalPrincipal(c => c.Guanyador);
+
             base.OnModelCreating(modelBuilder);
         }
     }
