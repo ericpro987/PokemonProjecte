@@ -10,6 +10,9 @@ namespace ProjectePokemon
         }
         public DbSet<Entrenador> Entrenadors { get; set; }
         public DbSet<Pokemon> Pokemons { get; set; }
+        public DbSet<Moviment> Moviments{ get; set; }
+        public DbSet<Combat> Combats { get; set; }
+
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

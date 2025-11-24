@@ -19,6 +19,7 @@ namespace ProjectePokemon
 
         public virtual ICollection<Entrenador> Participants { get; set; }
 
+        public EstatCombat estatCombat { get; set; }
         public Combat()
         {
             Torn = 1;

@@ -24,6 +24,7 @@ namespace ProjectePokemon
                 return false;
             }
             entrenador.Pokemons.Add(Pokemon);
+            Pokemon.Entrenador = entrenador;
 
             Console.WriteLine("Pokemon " + Pokemon.Nom + " afegit al entrendor " + entrenador.Nom + ". Llista pokemons de " + entrenador.Nom + ":\n");
             foreach (var p in entrenador.Pokemons)
@@ -55,6 +56,9 @@ namespace ProjectePokemon
             }
             return pokemonsActius;
         }
+
+
+        
     }
 
 }

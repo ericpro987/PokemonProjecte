@@ -49,6 +49,8 @@ namespace ProjectePokemon
             EvolucionsSeguents = new HashSet<Pokemon>();
             Moviments = new HashSet<Moviment>();
         }
+
+
     }
 
 }

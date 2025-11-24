@@ -94,6 +94,12 @@ public class Program
             // Tornar a mostrar l'equip actiu
             MostrarEquipActiu(1);
 
+            Console.WriteLine("FUNCION RECURSIVA EVOLUCIONES");
+
+            MostrarEvolucions2(charmeleon.PokemonID);
+
+
+
             Console.WriteLine("\n=== Evolucions===");
             Console.WriteLine("Evolucions de Charmander:");
             MostarEvolucions(charmander);
@@ -173,6 +179,16 @@ public class Program
         Console.WriteLine("\n=== Curar un Pokémon debilitat ===");
 
         pokemonService.Curar(idPokemon);
+    }
+
+    public static void MostrarEvolucions2(int idPokemon)
+    {
+        List<Pokemon> list = pokemonService.CadenaEvolutiva(idPokemon);
+
+        foreach(Pokemon p in list)
+        {
+            Console.WriteLine($"- {p.Nom}".ToUpper());
+        }
     }
 
     public static void MostarEvolucions(Pokemon pokemon)
