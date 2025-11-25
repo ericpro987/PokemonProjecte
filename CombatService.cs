@@ -1,4 +1,7 @@
-﻿namespace ProjectePokemon
+﻿using Microsoft.Win32.SafeHandles;
+using System.Data.Entity.Core.Mapping;
+
+namespace ProjectePokemon
 {
     public class CombatService
     {
@@ -86,6 +89,7 @@
                 if (pokemonDefensor.EstaDebilitat == false)
                 {
                     pokemonDefensor.EstaDebilitat = true;
+                    pokemonDefensor.actiu = false;
                     _ctx.SaveChanges();
                 }
                 if (pokemonService.PotEvolucionar(pokemonAtacant.PokemonID))
@@ -93,6 +97,106 @@
                     Console.WriteLine(pokemonAtacant.Nom + " pot evolucionar!");
                 }
             }
+        }
+        public bool CanviarPokemon(int idCombat, int idEntrenador, int idPokemon)
+        {
+            Combat combat = _ctx.Combats.Find(idCombat);
+            Entrenador entrenador = _ctx.Entrenadors.Find(idEntrenador);
+            Pokemon pok = _ctx.Pokemons.Find(idPokemon);
+            if (combat.Participants.Contains(entrenador))
+            {
+                if (entrenador.Pokemons.Contains(pok))
+                {
+                    if (!pok.EstaDebilitat)
+                    {
+                        pok.actiu = true;
+                        _ctx.SaveChanges();
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
+        bool ComprovarFiCombat(int idCombat)
+        {
+            bool seSalva = false;
+            Combat c = _ctx.Combats.Find(idCombat);
+            foreach (Entrenador e in c.Participants)
+            {
+                foreach (Pokemon pok in e.Pokemons)
+                {
+                    if (!pok.EstaDebilitat)
+                    {
+                        seSalva = true;
+                    }
+                }
+                if(seSalva)
+                    seSalva = false;
+                else
+                {
+                    foreach(Entrenador e2 in c.Participants)
+                    {
+                        if(!(e == e2))
+                        {
+                            AssignarGuanyador(c.CombatID,e2.EntrenadorID);
+                            return true;
+                        }
+                    }
+                }
+            }
+            return false;
+        }
+        void AssignarGuanyador(int idCombat, int idEntrenador)
+        {
+            Combat combat = _ctx.Combats.Find(idCombat);
+            Entrenador e = _ctx.Entrenadors.Find(idEntrenador);
+            combat.Guanyador = e;
+            combat.estatCombat = EstatCombat.FINALITZAT;
+            combat.DataFi = DateTime.Now;
+            e.Medalles+=1;
+            foreach(Entrenador e2 in combat.Participants)
+            {
+                if (e2 != e)
+                {
+                    e.DinersPokedollars += CalcularPokeDollars(e2.EntrenadorID);
+                }
+            }
+            _ctx.SaveChanges();
+        }
+        int CalcularPokeDollars(int idEntrenador)
+        {
+            int mitja = 0;
+            Entrenador e = _ctx.Entrenadors.Find(idEntrenador);
+            foreach(Pokemon pokemon in e.Pokemons)
+            {
+                mitja += pokemon.Nivell;
+            }
+            mitja/=e.Pokemons.Count();
+            return mitja;
+        }
+        void CambiarTorn(int idCombat)
+        {
+            Combat c = _ctx.Combats.Find(idCombat);
+            switch (c.Torn)
+            {
+                case 1:
+                    c.Torn = 2; 
+                    break;
+                case 2:
+                    c.Torn = 1;
+                    break;
+            }
+            _ctx.SaveChanges();
+        }
+        public Pokemon PokemonActiu(int idEntrenador, int idCombat)
+        {
+            Entrenador e = _ctx.Entrenadors.Find(idEntrenador);
+            foreach(Pokemon pok in e.Pokemons)
+            {
+                if (pok.actiu)
+                    return pok;
+            }
+            return null;
         }
     }
 }

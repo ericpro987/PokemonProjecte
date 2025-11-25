@@ -35,6 +35,7 @@ namespace ProjectePokemon
         [DefaultValue(false)]
         public bool EstaDebilitat { get; set; }
 
+        public bool actiu { get; set; }
         public virtual Entrenador Entrenador { get; set; }
         public virtual Pokemon EvolucionsPrevias { get; set; }
         public virtual ICollection<Pokemon> EvolucionsSeguents { get; set; }
