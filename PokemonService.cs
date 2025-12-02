@@ -37,6 +37,10 @@ namespace ProjectePokemon
                 pokemon.PuntsVida = pokemon.PuntsVidaMaxim;
                 pokemon.Experiencia %= 100;
             }
+            if(pokemon.Nivell > pokemon.NivellEvolucio)
+            {
+                Evolucionar(pokemon.PokemonID);
+            }
 
             Console.WriteLine(pokemon.Nom + " ha guanyat " + exp + " d'experiencia");
             Console.WriteLine(pokemon.Nom + " ara es nivell " + pokemon.Nivell + " i té " + pokemon.Experiencia + " d'experiencia");
@@ -156,6 +160,7 @@ namespace ProjectePokemon
                     if (m.Tipus == evolucio.Tipus || m.Tipus == Tipus.NORMAL)
                     {
                         newPokemon.Moviments.Add(m);
+                        m.Pokemons.Add(newPokemon);
                     }
                 }
                 _ctx.Pokemons.Add(newPokemon);

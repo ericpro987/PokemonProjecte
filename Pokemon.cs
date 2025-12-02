@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ProjectePokemon
 {
@@ -51,7 +46,17 @@ namespace ProjectePokemon
             Moviments = new HashSet<Moviment>();
         }
 
-
+        public string ToString()
+        {
+            string txt = "Nom:" + this.Nom + " Vida: " + this.PuntsVida + " Nivell Evolucio: "+ this.NivellEvolucio+" Nivell: "+this.Nivell+" Moviments: ";
+            foreach (Moviment m in this.Moviments)
+            {
+                txt += " " + m.ToString();
+            }
+            return txt;
+        }
     }
 
 }
+
+

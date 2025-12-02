@@ -74,3 +74,13 @@ D:\Pokemon\PokemonProjecte\obj\Debug\net8.0\refint\ProjectePokemon.dll
 D:\Pokemon\PokemonProjecte\obj\Debug\net8.0\ProjectePokemon.pdb
 D:\Pokemon\PokemonProjecte\obj\Debug\net8.0\ProjectePokemon.genruntimeconfig.cache
 D:\Pokemon\PokemonProjecte\obj\Debug\net8.0\ref\ProjectePokemon.dll
+D:\Pokemon\PokemonProjecte\bin\Debug\net8.0\Microsoft.EntityFrameworkCore.dll
+D:\Pokemon\PokemonProjecte\bin\Debug\net8.0\Microsoft.EntityFrameworkCore.Abstractions.dll
+D:\Pokemon\PokemonProjecte\bin\Debug\net8.0\Microsoft.Extensions.Caching.Abstractions.dll
+D:\Pokemon\PokemonProjecte\bin\Debug\net8.0\Microsoft.Extensions.Caching.Memory.dll
+D:\Pokemon\PokemonProjecte\bin\Debug\net8.0\Microsoft.Extensions.DependencyInjection.dll
+D:\Pokemon\PokemonProjecte\bin\Debug\net8.0\Microsoft.Extensions.DependencyInjection.Abstractions.dll
+D:\Pokemon\PokemonProjecte\bin\Debug\net8.0\Microsoft.Extensions.Logging.dll
+D:\Pokemon\PokemonProjecte\bin\Debug\net8.0\Microsoft.Extensions.Logging.Abstractions.dll
+D:\Pokemon\PokemonProjecte\bin\Debug\net8.0\Microsoft.Extensions.Options.dll
+D:\Pokemon\PokemonProjecte\bin\Debug\net8.0\Microsoft.Extensions.Primitives.dll

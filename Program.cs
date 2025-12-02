@@ -6,6 +6,7 @@ public class Program
 
     static EntrenadorService entrenadorService;
     static PokemonService pokemonService;
+    static CombatService combatService;
 
     static void Main(string[] args)
     {
@@ -13,6 +14,7 @@ public class Program
         {
             entrenadorService = new EntrenadorService(ctx);
             pokemonService = new PokemonService(ctx);
+            combatService = new CombatService(ctx);
 
             Entrenador eloi = new Entrenador() { Nom = "Eloi", Cognoms = "Albareda" };
             Entrenador marc = new Entrenador() { Nom = "Marc", Cognoms = "Vazquez" };
@@ -23,15 +25,28 @@ public class Program
             Pokemon pikachu = new Pokemon() { Nom = "Pikachu", Tipus = Tipus.ELECTRIC, Nivell = 5, PuntsVida = 50, PuntsVidaMaxim = 50, Experiencia = 50, Entrenador = eloi };
             Pokemon charmander = new Pokemon() { Nom = "Charmander", Tipus = Tipus.FOC, Nivell = 5, PuntsVida = 50, PuntsVidaMaxim = 50, Experiencia = 50, Entrenador = marc };
             Pokemon charmeleon = new Pokemon() { Nom = "Charmeleon", Tipus = Tipus.FOC, Nivell = 5, PuntsVida = 150, PuntsVidaMaxim = 150, Experiencia = 50, Entrenador = marc };
+           
+            Moviment m = new Moviment();
+            m.Nom = "Entenderlo todo";
+            m.Tipus = Tipus.FOC;
+
+            ctx.Moviments.Add(m);
+            charmander.Moviments.Add(m);
+            m.Pokemons.Add(charmander);
+            ctx.SaveChanges();
+
             Pokemon charizard = new Pokemon() { Nom = "Charizard", Tipus = Tipus.FOC, Nivell = 16, PuntsVida = 250, PuntsVidaMaxim = 250, Experiencia = 50, Entrenador = marc };
             Pokemon megacharizardx = new Pokemon() { Nom = "Mega Charizard X", Tipus = Tipus.FOC, Nivell = 16, PuntsVida = 450, PuntsVidaMaxim = 450, Experiencia = 50, Entrenador = marc };
             Pokemon megacharizardy = new Pokemon() { Nom = "Mega Charizard Y", Tipus = Tipus.FOC, Nivell = 16, PuntsVida = 350, PuntsVidaMaxim = 350, Experiencia = 50, Entrenador = marc };
+            charmander.NivellEvolucio = 1;
+            charmeleon.NivellEvolucio = 1;
             charmander.EvolucionsSeguents.Add(charmeleon);
             charmeleon.EvolucionsPrevias = charmander;
             charmeleon.EvolucionsSeguents.Add(charizard);
             charizard.EvolucionsPrevias = charmeleon;
             charizard.EvolucionsSeguents.Add(megacharizardx);
             charizard.EvolucionsSeguents.Add(megacharizardy);
+            charizard.NivellEvolucio = 1;
             megacharizardx.EvolucionsPrevias = charizard;
             megacharizardy.EvolucionsPrevias = charizard;
             Pokemon pidgeon = new Pokemon() { Nom = "Pidgeon", Tipus = Tipus.NORMAL, Nivell = 5, PuntsVida = 50, PuntsVidaMaxim = 50, Experiencia = 50, Entrenador = eloi };
@@ -50,7 +65,11 @@ public class Program
             ivysaur.EvolucionsSeguents.Add(venosaur);
             venosaur.EvolucionsPrevias = ivysaur;
             Pokemon cyndaquil = new Pokemon() { Nom = "Cyndaquil", Tipus = Tipus.FOC, Nivell = 5, PuntsVida = 50, PuntsVidaMaxim = 50, Experiencia = 50, Entrenador = marc };
-
+            Combat c1 = new Combat();
+            c1.DataInici = DateTime.Now;
+            c1.Participants.Add(marc);
+            c1.Participants.Add(eloi);
+            ctx.Combats.Add(c1);
             ctx.Pokemons.Add(pikachu);
             ctx.Pokemons.Add(charmander);
             ctx.Pokemons.Add(charmeleon);
@@ -98,7 +117,16 @@ public class Program
 
             MostrarEvolucions2(charmeleon.PokemonID);
 
-
+            Console.WriteLine("EVOLUCIONAR");
+            Console.WriteLine(charmander.ToString());
+           charmander = pokemonService.Evolucionar(charmander.PokemonID);
+            Console.WriteLine(charmander.ToString());
+          
+            // Mostar Ultim
+            pokemonService.RebreDany(charmander.PokemonID, 1000);
+            Console.WriteLine(charmander.ToString());
+            pokemonService.Curar(charmander.PokemonID);
+            Console.WriteLine(charmander.ToString());
 
             Console.WriteLine("\n=== Evolucions===");
             Console.WriteLine("Evolucions de Charmander:");
@@ -123,6 +151,9 @@ public class Program
             MostarEvolucions(ivysaur);
             Console.WriteLine("\nEvolucions de Venosaur:");
             MostarEvolucions(venosaur);
+
+            Console.WriteLine("Combat:");
+            combatService.IniciarCombat(eloi.EntrenadorID, marc.EntrenadorID);
         }
     }
     public static void MostrarDadesBD()

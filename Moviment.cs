@@ -32,6 +32,10 @@ namespace ProjectePokemon
 
             Pokemons = new HashSet<Pokemon>();
         }
+        public string ToString()
+        {
+            return "Nom: " + this.Nom + " Tipus: " + this.Tipus;
+        }
     }
 
 }
